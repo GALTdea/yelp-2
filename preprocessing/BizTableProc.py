@@ -6,7 +6,6 @@ import numpy as np
 import csv
 
 
-<<<<<<< HEAD
 resultFile = open("businesses.csv",'w')
 wr = csv.writer(resultFile, delimiter='|')
 
@@ -21,14 +20,8 @@ x=0
 jsonIn = '/Users/mvm/Documents/yelp_dataset_challenge_academic_dataset/yelp_academic_dataset_business.json'
 
 dataArray = []
-=======
-resultFile = open("business.csv",'w')
-wr = csv.writer(resultFile)
-
-jsonIn = '../../yelp_dataset/yelp_academic_dataset_business.json'
 
 y = 0
-x = 0
 with open (jsonIn) as data_file:
     for line in data_file:
 
