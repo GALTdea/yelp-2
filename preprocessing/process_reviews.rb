@@ -2,42 +2,26 @@ require 'json'
 require 'csv'
 
 # Returns the JSON from :file.
-def get_file(file)
-  arr = []
-  File.open(file, "r").each_line do |line|
-   arr << JSON.parse(line)
+def process_file(file1, file2)
+  CSV.open(file2, 'w') do |csv|
+  File.open(file1, "r").each_line do |line|
+    x = JSON.parse(line)
+    y = {}
+    y['review_id'] = x['review_id']
+    y['business_id'] = x['business_id']
+    y['stars'] = x['stars']
+    y['date'] = x['date']
+    y['text'] = x['text'].gsub("\n", ' ')
+    csv << y.values
   end
-  arr
-end
-
-# Saves :data to :file as CSV.
-def save(data, file)
-  CSV.open(file, 'w') do |csv|
-    csv << data.first.keys
-    data.each do |row|
-      csv << row.values
-    end
-  end
-end
-
-# Cleans :data.
-def clean(data)
-  data.map do |x|
-    {
-      'review_id' => x['review_id'],
-      'business_id' => x['business_id'],
-      'stars' => x['stars'],
-      'date' => x['date'],
-      'text' => x['text'].gsub("\n", ' ')
-    }
   end
 end
 
 # Main method.
 def main
-  file = ARGV[0]
-  data = clean(get_file(file))
-  save(data, 'review.csv')
+  file1 = ARGV[0]
+  file2 = ARGV[1]
+  process_file(file1, file2)
 end
 
 main
