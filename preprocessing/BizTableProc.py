@@ -26,12 +26,13 @@ with open (jsonIn) as data_file:
 
         obj = json.loads(line)
         
-        businessId = obj['business_id'].encode('ascii','replace')
-        name = obj['name'].encode('ascii','replace')
+        businessId = obj['business_id'].encode('utf-8','replace')
+        name = obj['name'].encode('utf-8','replace')
         fullAddress = obj['full_address']
         city = obj['city']
         state = obj['state']
         latitude = obj['latitude']
         longitude = obj['longitude']
-        if(state == "NV"):
+        open1 = obj['open']
+        if(state == "NV" and open1):
             wr.writerow([businessId,name,fullAddress,city,state,latitude,longitude])
