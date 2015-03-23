@@ -6,13 +6,22 @@ import numpy as np
 import csv
 
 
-resultFile = open("business.csv",'w')
-wr = csv.writer(resultFile)
+resultFile = open("businesses.csv",'w')
+wr = csv.writer(resultFile, delimiter='|')
 
-jsonIn = '../../yelp_dataset/yelp_academic_dataset_business.json'
+
+# creates biz_hash
+biz_cat = {}
+#categoryOptsDict = util.Counter()
+
+x=0
+
+#jsonIn = '../yelp_dataset/yelp_academic_dataset_business.json'
+jsonIn = '/Users/mvm/Documents/yelp_dataset_challenge_academic_dataset/yelp_academic_dataset_business.json'
+
+dataArray = []
 
 y = 0
-x = 0
 with open (jsonIn) as data_file:
     for line in data_file:
 
@@ -28,7 +37,9 @@ with open (jsonIn) as data_file:
         
         businessId = obj['business_id'].encode('utf-8','replace')
         name = obj['name'].encode('utf-8','replace')
-        fullAddress = obj['full_address']
+
+        fullAddress = obj['full_address'].replace('\n', ' ')
+
         city = obj['city']
         state = obj['state']
         latitude = obj['latitude']
