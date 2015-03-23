@@ -6,7 +6,7 @@ import numpy as np
 import csv
 
 
-resultFile = open("temp.csv",'w')
+resultFile = open("business.csv",'w')
 wr = csv.writer(resultFile)
 
 jsonIn = '../../yelp_dataset/yelp_academic_dataset_business.json'
@@ -20,9 +20,9 @@ with open (jsonIn) as data_file:
         if x % 10000 == 0:
             print x
 
-        y = y + 1
-        if(y > 10000):
-            break
+    #    y = y + 1
+    #    if(y > 10000):
+    #        break
 
         obj = json.loads(line)
         
