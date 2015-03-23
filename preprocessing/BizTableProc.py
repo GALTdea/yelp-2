@@ -6,28 +6,23 @@ import numpy as np
 import csv
 
 
-resultFile = open("businesses.csv",'w')
+resultFile = open("temp.csv",'w')
 wr = csv.writer(resultFile)
 
-
-# creates biz_hash
-biz_cat = {}
-#categoryOptsDict = util.Counter()
-
-x=0
-
-jsonIn = '../yelp_dataset/yelp_academic_dataset_business.json'
-
-dataArray = []
+jsonIn = '../../yelp_dataset/yelp_academic_dataset_business.json'
 
 y = 0
+x = 0
 with open (jsonIn) as data_file:
     for line in data_file:
 
         x = x+1
-
         if x % 10000 == 0:
             print x
+
+        y = y + 1
+        if(y > 10000):
+            break
 
         obj = json.loads(line)
         
@@ -40,11 +35,3 @@ with open (jsonIn) as data_file:
         longitude = obj['longitude']
         if(state == "NV"):
             wr.writerow([businessId,name,fullAddress,city,state,latitude,longitude])
-       # dataArray.append([businessId,name,fullAddress,city,state,latitude,longitude])
-
-#print dataArray[0]
-#print dataArray[1]
-#allData = np.asarray(dataArray)
-#np.savetxt('../bizData.csv',dataArray, delimiter = ",")
-
-
