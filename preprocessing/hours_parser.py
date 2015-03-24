@@ -3,7 +3,7 @@ import json
 #place this file in same directory as "yelp_academic_dataset_business.json"
 
 with open('hours_parsed.csv', 'w') as f:
-	with open("yelp_academic_dataset_business.json") as data_file:    
+	with open("/Users/mvm/Documents/yelp_dataset_challenge_academic_dataset/yelp_academic_dataset_business.json") as data_file:    
 
 		for line in data_file:
 

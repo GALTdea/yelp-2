@@ -38,12 +38,12 @@ with open (jsonIn) as data_file:
         businessId = obj['business_id'].encode('utf-8','replace')
         name = obj['name'].encode('utf-8','replace')
 
-        fullAddress = obj['full_address'].replace('\n', ' ')
+        fullAddress = obj['full_address'].encode('utf-8','replace').replace('\n', ' ')
 
-        city = obj['city']
-        state = obj['state']
+        city = obj['city'].encode('utf-8')
+        state = obj['state'].encode('utf-8')
         latitude = obj['latitude']
         longitude = obj['longitude']
         open1 = obj['open']
-        if(state == "NV" and open1):
+        if open1:
             wr.writerow([businessId,name,fullAddress,city,state,latitude,longitude])

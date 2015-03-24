@@ -5,7 +5,7 @@ import collections
 import numpy as np
 
 
-bizpath = '../../yelp_dataset/yelp_academic_dataset_business.json'
+bizpath = '/Users/mvm/Documents/yelp_dataset_challenge_academic_dataset/yelp_academic_dataset_business.json'
 
 
 resultFile = open("busCat.csv",'w')
