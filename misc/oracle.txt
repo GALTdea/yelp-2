@@ -1,0 +1,8 @@
+1. Download Oracle Basic and Oracle SDK Zip folders.
+2. Unzip in desired folder: /opt/instantclient.
+3. Run the following commands.
+    cd /opt/oracle/instantclient_12_1
+    ln -s libclntsh.so.12.1 libclntsh.so
+    ln -s libocci.so.12.1 libocci.so
+    export LD_LIBRARY_PATH=/opt/instantclient:$LD_LIBRARY_PATH
+
