@@ -14,7 +14,7 @@ development:
   adapter: oracle_enhanced
   host: heatmapdb.cfwyxsmqsg7s.us-east-1.rds.amazonaws.com
   port: 1521
-  database: appDB
+  database: AppDB
   username: guest
   password: hMkC4m8ZnQDXsmZd7kjJE2TbDbUf2N
 
