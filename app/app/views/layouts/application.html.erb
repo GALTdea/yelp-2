@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Yelp Visualizer</title>
+  <%= stylesheet_link_tag "fontawesome" %>
   <%= stylesheet_link_tag "application", :media => "all" %>
   <%= stylesheet_link_tag "leaflet" %>
   <%= javascript_include_tag "application" %>
@@ -13,10 +14,10 @@
 
 <div class="navbar">
   <div class="navbar-inner">
-    <a class="brand" href="#">Yelp Visualizer</a>
+    <a class="brand" href="#"><i class="fa fa-map-marker"></i> Yelp Visualizer</a>
     <ul class="nav">
-      <li class="active"><a href="#">Home</a></li>
-      <li><a href="#">Link</a></li>
+      <li class="active"><a href="#"><i class="fa fa-globe"></i> Map</a></li>
+      <li><a href="#"><i class="fa fa-info-circle"></i> About</a></li>
       <li><a href="#">Link</a></li>
     </ul>
   </div>
