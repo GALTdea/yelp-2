@@ -28,7 +28,7 @@ var getData = function (map, heatmapLayer) {
       data: data
     };
 
-    map.setView([businesses.data[0].latitude, businesses.data[0].longitude], 8);
+    map.setView([businesses.data[0].latitude, businesses.data[0].longitude], 11);
     heatmapLayer.setData(businesses);
 
   });
@@ -46,20 +46,13 @@ $(document).ready(function() {
   );
 
   var cfg = {
-    // radius should be small ONLY if scaleRadius is true (or small radius is intended)
-    "radius": 1,
+    "radius": 0.01,
     "maxOpacity": .8, 
-    // scales the radius based on map zoom
-    "scaleRadius": true, 
-    // if set to false the heatmap uses the global maximum for colorization
-    // if activated: uses the data maximum within the current map boundaries 
-    //   (there will always be a red spot with useLocalExtremas true)
+    "scaleRadius": true,
+    "blur": 0.9,
     "useLocalExtrema": false,
-    // which field name in your data represents the latitude - default "lat"
     latField: 'latitude',
-    // which field name in your data represents the longitude - default "lng"
     lngField: 'longitude',
-    // which field name in your data represents the data value - default "value"
     valueField: 'rating'
   };
 
