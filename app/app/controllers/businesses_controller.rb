@@ -2,7 +2,9 @@ class BusinessesController < ApplicationController
 
   def index
     #@businesses = Business.all
-    @businesses = Business.limit(100)
+    @b = Business.limit(50)
+
+    @businesses = @b.each {|x| x['rating'] = 1}
 
     respond_to do |format|
       format.html # index.html.erb
