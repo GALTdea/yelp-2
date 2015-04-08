@@ -1,0 +1,22 @@
+<h1>Listing businesscategories</h1>
+
+<table>
+  <tr>
+    <th>Business</th>
+    <th>Category</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @businesscategories.each do |businesscategory| %>
+  <tr>
+    <td><%= businesscategory.business_id %></td>
+    <td><%= businesscategory.category_id %></td>
+     </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Businesscategory', new_businesscategory_path %>

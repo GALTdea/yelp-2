@@ -1,0 +1,23 @@
+<h1>Listing categories</h1>
+
+<table>
+  <tr>
+    <th>Category</th>
+    <th>Name</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @categories.each do |category| %>
+  <tr>
+    <td><%= category.category_id %></td>
+    <td><%= category.name %></td>
+%></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Category', new_category_path %>

@@ -1,0 +1,25 @@
+<%= form_for(@businesscategory) do |f| %>
+  <% if @businesscategory.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@businesscategory.errors.count, "error") %> prohibited this businesscategory from being saved:</h2>
+
+      <ul>
+      <% @businesscategory.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :business_id %><br />
+    <%= f.text_area :business_id %>
+  </div>
+  <div class="field">
+    <%= f.label :category_id %><br />
+    <%= f.number_field :category_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

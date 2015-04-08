@@ -2,7 +2,7 @@ class BusinessesController < ApplicationController
 
   def index
     #@businesses = Business.all
-    @b = Business.limit(50)
+    @b = Business.limit(5000)
 
     @businesses = @b.each {|x| x['rating'] = 1}
 
