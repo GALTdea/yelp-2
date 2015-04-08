@@ -10,6 +10,7 @@
 <div id="left-nav" class="span3">
   <h1>Yelp Data</h1>
   <p>Insert options here.</p>
+  <a onclick="useCurrentLocation()"><i class="fa fa-map-marker"></i> My Current Location</a>
 
   <div class="row">
   <div class="span3">
@@ -38,7 +39,11 @@
 
 <script>
 
-var getData = function (map, heatmapLayer) {
+var map = {};
+var heatmapLayer = {};
+var dataZoom = 11;
+
+var getData = function () {
 
   $.getJSON('/businesses.json', function(data) {
 
@@ -47,13 +52,12 @@ var getData = function (map, heatmapLayer) {
       data: data
     };
 
-    map.setView([businesses.data[0].latitude, businesses.data[0].longitude], 11);
+    map.setView([businesses.data[0].latitude, businesses.data[0].longitude], dataZoom);
     heatmapLayer.setData(businesses);
 
   });
 
 };
-
 
 $(document).ready(function() {
 
@@ -75,9 +79,9 @@ $(document).ready(function() {
     valueField: 'rating'
   };
 
-  var heatmapLayer = new HeatmapOverlay(cfg);
+  heatmapLayer = new HeatmapOverlay(cfg);
 
-  var map = new L.Map('map', {
+  map = new L.Map('map', {
     center: new L.LatLng(39.8282, -98.5795),
     zoom: 4,
     layers: [baseLayer, heatmapLayer]
@@ -88,6 +92,17 @@ $(document).ready(function() {
   });
 
 });
+
+var useCurrentLocation = function () {
+  navigator.geolocation.getCurrentPosition(function (data) {
+    var BlueIcon = L.Icon.Default;
+    map.setView([data.coords.latitude, data.coords.longitude], dataZoom);
+    L.marker([data.coords.latitude, data.coords.longitude], {icon: new L.Icon.Default})
+     .addTo(map)
+     .bindPopup('<h5>You are here.</h5>')
+     .openPopup();
+  });
+};
 
 </script>
 
