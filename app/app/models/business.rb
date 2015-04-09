@@ -3,5 +3,5 @@ class Business < ActiveRecord::Base
   attr_accessible :business_id, :city, :full_address, :latitude, :longitude, :name, :state
 
   has_many :businesscategories
-  has_many :categories, :through :businesscategories
+  has_many :categories, through: :businesscategories
 end
