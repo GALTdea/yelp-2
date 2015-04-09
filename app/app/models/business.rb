@@ -4,4 +4,7 @@ class Business < ActiveRecord::Base
 
   has_many :businesscategories, :foreign_key  => "business_id"
   has_many :categories, through: :businesscategories
+
+  has_many :businessattributes, :foreign_key  => "business_id"
+  has_many :attributes, through: :businessattributes
 end
