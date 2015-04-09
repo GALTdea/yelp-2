@@ -2,7 +2,10 @@ class BusinessesController < ApplicationController
 
   def index
     #@businesses = Business.all
-    @b = Business.limit(5000)
+  
+    @city = params[:city].gsub('_', ' ')
+
+    @b = Business.where(:city = @city).limit(100)
 
     @businesses = @b.each {|x| x['rating'] = 1}
 

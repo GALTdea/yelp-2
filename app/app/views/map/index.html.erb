@@ -10,14 +10,14 @@
 <div id="left-nav" class="span3">
   <h1>Yelp Data</h1>
   <p>Insert options here.</p>
-  <a onclick="useCurrentLocation()"><i class="fa fa-map-marker"></i> My Current Location</a>
+  <p><a onclick="useCurrentLocation()"><i class="fa fa-map-marker"></i> My Current Location</a></p>
 
   <div class="row">
   <div class="span3">
     <label>City</label>
-    <select>
-      <option value="lasvegas">Las Vegas</option>
-      <option value="option2">TODO</option>
+    <select id="input-city">
+      <option value="Las_Vegas">Las Vegas</option>
+      <option value="Carnegie">Carnegie</option>
       <option value="option3">TODO</option>
     </select>
   </div>
@@ -45,7 +45,10 @@ var dataZoom = 11;
 
 var getData = function () {
 
-  $.getJSON('/businesses.json', function(data) {
+  var formData = {};
+  formData.city = $('#input-city').val();
+
+  $.getJSON('/businesses.json', formData, function(data) {
 
     var businesses = {
       max: 1,
