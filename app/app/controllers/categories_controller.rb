@@ -2,7 +2,7 @@ class CategoriesController < ApplicationController
   # GET /categories
   # GET /categories.json
   def index
-    @categories = Category.limit(50)
+    @categories = Category.all
 
     respond_to do |format|
       format.html # index.html.erb

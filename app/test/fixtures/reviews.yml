@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  review_id: MyText
+  business_id: MyText
+  stars: 1.5
+  text: MyText
+  review_date: 2015-04-08
+
+two:
+  review_id: MyText
+  business_id: MyText
+  stars: 1.5
+  text: MyText
+  review_date: 2015-04-08
