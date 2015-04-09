@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="utf-8">
   <title>Yelp Visualizer</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />  
@@ -22,54 +23,49 @@
 <style>
   #map {width:100%; height:500px; margin-bottom:40px; background-color:grey;}
   #left-nav{height:500px; max-height:500px; overflow-y:scroll;}
-  #left-nav,.row{margin-bottom:15px;}
+  select,input{width:90%}
 </style>
 <div class="row">
 
 <!-- BEGIN EDITABLE -->
 
 <div id="left-nav" class="span3">
-
   <h1>Yelp Data</h1>
-  <p class="lead">Insert options here:</p>
+  <p><a><i class="fa fa-map-marker"></i> My Current Location</a></p>
 
-  <form>
+  <label>City</label>
+  <select id="input-city">
+    <option value="Charlotte">Charlotte</option>
+    <option value="Las Vegas">Las Vegas</option>
+    <option value="Madison">Madison</option>
+    <option value="Montreal">Montreal</option>
+    <option value="Phoenix">Phoenix</option>
+    <option value="Pittsburgh">Pittsburgh</option>
+  </select>
 
-  <div class="row">
-  <div class="span3">
-    <label>City</label>
-    <select>
-      <option value="pittsburg">Pittsburg</option>
-      <option value="lasvegas">Las Vegas</option>
-      <option value="option3">Option 3</option>
-      <option value="option4">Option 4</option>
-    </select>
+  <label>Label name</label>
+  <input type="text" placeholder="Type something.">
+
+
+  <label class="checkbox">
+    <input type="checkbox"> Check me out
+  </label>
+
+  <div class="text-center">
+    <button id="search-btn" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
   </div>
-  </div>
-
-  <div class="row">
-  <div class="span2">
-
-    <label>Label name</label>
-    <input type="text" placeholder="Type something.">
-
-
-    <label class="checkbox">
-      <input type="checkbox"> Check me out
-    </label>
-
-  </div>
-  </div>
-
-  <div class="row">
-  <div class="span3 text-center">
-    <button class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
-  </div>
-  </div>
-
-  </form>
 
 </div>
+
+<script>
+
+$('#search-btn').click(function() {
+  var formData = {};
+  formData.city = $('#input-city').val();
+  console.log(formData);
+});
+
+</script>
 
 <!-- END EDITABLE -->
 
