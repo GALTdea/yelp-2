@@ -44,11 +44,7 @@ var getData = function () {
   var formData = {};
   formData.city = $('#input-city').val();
 
-  console.log(formData.city);
-
   $.getJSON('/businesses.json', formData, function(data) {
-
-    console.log(data);
 
     var businesses = {
       max: 1,
