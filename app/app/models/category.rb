@@ -3,5 +3,5 @@ class Category < ActiveRecord::Base
   attr_accessible :category_id, :name
 
   has_many :businesscategories
-  has_many :businesses, through :businesscategories
+  has_many :businesses, through: :businesscategories
 end
