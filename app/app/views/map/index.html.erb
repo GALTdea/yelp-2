@@ -21,6 +21,14 @@
     <option value="Pittsburgh">Pittsburgh</option>
   </select>
 
+  <label>Category</label>
+  <select id="input-category" multiple="multiple">
+  </select>
+  
+  <label>Attribute</label>
+  <select id="input-attr" multiple="multiple">
+  </select>
+
   <div class="text-center">
     <button id="search-btn" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
   </div>
@@ -43,6 +51,8 @@ var getData = function () {
 
   var formData = {};
   formData.city = $('#input-city').val();
+  formData.categories = $('#input-category').val();
+  formData.attributes = $('#input-attr').val();
 
   $.getJSON('/businesses.json', formData, function(data) {
 
@@ -89,6 +99,44 @@ $(document).ready(function() {
   $('#search-btn').click(function() {
     getData(map, heatmapLayer);
   });
+
+
+  
+  
+  $.getJSON("/categories.json", function(data) {
+
+	$.each(data, function(key, value) {   
+    
+    $('#input-category').append($('<option>', {
+    value: value.category_id,
+    text: value.name
+	}));
+	
+	});
+	
+	$('#input-category').multiselect();
+  		
+   });
+ 
+   $.getJSON("/attributes.json", function(data) {
+
+	$.each(data, function(key, value) {   
+    
+    $('#input-attr').append($('<option>', {
+    value: value.attribute_id,
+    text: value.attribute_name
+	}));
+	
+	});
+	
+	$('#input-attr').multiselect();
+  		
+   });
+  
+
+  
+  
+
 
 });
 
