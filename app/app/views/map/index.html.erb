@@ -1,15 +1,13 @@
 <style>
   #map {width:100%; height:500px; margin-bottom:40px;}
-  #left-nav{height:500px; max-height:500px; overflow-y:scroll; overflow-x:hidden}
-  #left-nav,.row{margin-bottom:15px;}
-  select{width:90%;}
+  #left-nav{height:500px;}
+  select{width:100%;}
 </style>
 
 <div class="row">
 
-<div id="left-nav" class="span3">
-  <h1>Yelp Data</h1>
-  <p><a onclick="useCurrentLocation()"><i class="fa fa-map-marker"></i> My Current Location</a></p>
+<div id="left-nav" class="span2">
+  <h2>Filters</h2>
 
   <label>City</label>
   <select id="input-city">
@@ -21,22 +19,32 @@
     <option value="Pittsburgh">Pittsburgh</option>
   </select>
 
+  <br><br>
+
   <label>Category</label>
-  <select id="input-category" multiple="multiple">
-  </select>
+  <select id="input-category" multiple="multiple"></select>
+
+  <br><br>
   
   <label>Attribute</label>
-  <select id="input-attr" multiple="multiple">
-  </select>
+  <select id="input-attr" multiple="multiple"></select>
+
+  <br><br><br>
 
   <div class="text-center">
     <button id="search-btn" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
   </div>
 
+  <br>
+
+  <p><a onclick="useCurrentLocation()"><i class="fa fa-map-marker"></i> Current Location</a></p>
+  <p><a><i class="fa fa-save"></i> Save Search</a></p>
+  <p><a><i class="fa fa-upload"></i> Load Search</a></p>
+
 </div>
 
-<div class="span9">
-<div id="map"></div>
+<div class="span10">
+  <div id="map"></div>
 </div>
 
 </div> <!-- /.row -->
@@ -143,7 +151,7 @@ $(document).ready(function() {
 var useCurrentLocation = function () {
   navigator.geolocation.getCurrentPosition(function (data) {
     var BlueIcon = L.Icon.Default;
-    map.setView([data.coords.latitude, data.coords.longitude], dataZoom);
+    map.setView([data.coords.latitude, data.coords.longitude], dataZoom + 3);
     L.marker([data.coords.latitude, data.coords.longitude], {icon: new L.Icon.Default})
      .addTo(map)
      .bindPopup('<h5>You are here.</h5>')
