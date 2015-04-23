@@ -3,7 +3,7 @@ class BusinessesController < ApplicationController
   def index
   #  @cat = Businesscategory.where(:category_id => params[:categories])
 
-    @businesses = Business.where(:city => params[:city])
+    @businesses = Business.where(:region => params[:city])
 
     if(params.has_key?(:categories))
     	@businesses = @businesses.joins(:businesscategories).where('businesscategories.category_id' => params[:categories])
