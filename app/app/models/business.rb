@@ -6,7 +6,7 @@ class Business < ActiveRecord::Base
   has_many :categories, through: :businesscategories
 
   has_many :businessattributes, :foreign_key  => "business_id"
-  #has_many :attributes, through: :businessattributes
+  has_many :zattributes, through: :businessattributes
 
   has_many :reviews, :foreign_key  => "business_id"
 end

@@ -1,0 +1,22 @@
+<h1>Listing attributes</h1>
+
+<table>
+  <tr>
+    <th>Attribute</th>
+    <th>Attribute name</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @zattributes.each do |zattributes| %>
+  <tr>
+    <td><%= zattributes.attribute_id %></td>
+    <td><%= zattributes.attribute_name %></td>
+
+  </tr>
+<% end %>
+</table>
+
+<br />
+
