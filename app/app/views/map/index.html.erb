@@ -87,7 +87,7 @@ var getData = function () {
   formData.categories = $('#input-category').val() || [];
   formData.attributes = $('#input-attr').val() || [];
 
-  console.log(formData);
+  //console.log(formData);
 
   $.getJSON('/businesses.json', formData, function (data) {
     results = data;
@@ -141,7 +141,7 @@ $(document).ready(function() {
   });
 
   $('#search-btn').click(function() {
-    getData(map, heatmapLayer);
+    getData();
     map.setView([results[0].latitude, results[0].longitude], dataZoom);
   });
 
@@ -155,7 +155,7 @@ $(document).ready(function() {
 	  $('#input-category').multiselect();
    });
  
-  $.getJSON("/attributes.json", function(data) {
+  $.getJSON("/zattributes.json", function(data) {
     $.each(data, function(key, value) {   
       $('#input-attr').append($('<option>', {
         value: value.attribute_id,
