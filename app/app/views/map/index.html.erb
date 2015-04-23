@@ -61,8 +61,12 @@ var zoomThreshold = 13;
 var plotData = function () {
   var arr = [];
   $.each(results, function (index, business) {
-    arr.push(L.marker([business.latitude, business.longitude], {icon: new L.Icon.Default})
-      .bindPopup('<p>Business</p>'));
+    arr.push(
+      L.marker([business.latitude, business.longitude], {icon: new L.Icon.Default})
+      .bindPopup('<p class="lead">' + business.name + '</p>' +
+        '<p>' + business.full_address + '</p>'
+      )
+    );
   });
   markerLayer = L.layerGroup(arr);
 };
