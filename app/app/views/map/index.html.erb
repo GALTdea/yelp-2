@@ -63,8 +63,8 @@ var plotData = function () {
   $.each(results, function (index, business) {
     arr.push(
       L.marker([business.latitude, business.longitude], {icon: new L.Icon.Default})
-      .bindPopup('<p class="lead">' + (business.name || 'Business') + '</p>' +
-        '<p>' + (business.full_address || 'No address recorded.') + '</p>'
+      .bindPopup('<p class="lead">' + business.name + '</p>' +
+        '<p>' + business.full_address + '</p>'
       )
     );
   });
