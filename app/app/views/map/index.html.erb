@@ -54,15 +54,17 @@
 var results = [];
 var map = {};
 var heatmapLayer = {};
+var markerLayer = {};
 var dataZoom = 11;
 var zoomThreshold = 13;
 
 var plotData = function () {
+  var arr = [];
   $.each(results, function (index, business) {
-    L.marker([business.latitude, business.longitude], {icon: new L.Icon.Default})
-    .addTo(map)
-    .bindPopup('<p>Business</p>');
+    arr.push(L.marker([business.latitude, business.longitude], {icon: new L.Icon.Default})
+      .bindPopup('<p>Business</p>'));
   });
+  markerLayer = L.layerGroup(arr);
 };
 
 var plotHeatData = function () {
@@ -71,7 +73,6 @@ var plotHeatData = function () {
     data: results
   };
 
-  map.setView([businesses.data[0].latitude, businesses.data[0].longitude], dataZoom);
   heatmapLayer.setData(businesses);
 };
 
@@ -119,19 +120,25 @@ $(document).ready(function() {
     layers: [baseLayer, heatmapLayer]
   });
 
-  /*
   map.on('zoomend', function () {
     if (map.getZoom() > zoomThreshold) {
-      heatmapLayer.setData({'data': []});
-      plotData();
-    } else { 
-      plotHeatData();
+      if (map.hasLayer(heatmapLayer)) map.removeLayer(heatmapLayer);
+      if (! map.hasLayer(markerLayer)) {
+        plotData();
+        map.addLayer(markerLayer);
+      }
+    } else {
+      if (map.hasLayer(markerLayer)) map.removeLayer(markerLayer);
+      if (! map.hasLayer(heatmapLayer)) {
+        plotHeatData();
+        map.addLayer(heatmapLayer);
+      }
     }   
   });
-  */
 
   $('#search-btn').click(function() {
     getData(map, heatmapLayer);
+    map.setView([results[0].latitude, results[0].longitude], dataZoom);
   });
 
   $.getJSON('/categories.json', function(data) {
