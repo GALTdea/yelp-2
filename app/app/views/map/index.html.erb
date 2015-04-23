@@ -51,27 +51,42 @@
 
 <script>
 
+var results = [];
 var map = {};
 var heatmapLayer = {};
 var dataZoom = 11;
+var zoomThreshold = 13;
+
+var plotData = function () {
+  $.each(results, function (index, business) {
+    L.marker([business.latitude, business.longitude], {icon: new L.Icon.Default})
+    .addTo(map)
+    .bindPopup('<p>Business</p>');
+  });
+};
+
+var plotHeatData = function () {
+  var businesses = {
+    max: 1,
+    data: results
+  };
+
+  map.setView([businesses.data[0].latitude, businesses.data[0].longitude], dataZoom);
+  heatmapLayer.setData(businesses);
+};
 
 var getData = function () {
 
   var formData = {};
   formData.city = $('#input-city').val();
-  formData.categories = $('#input-category').val();
-  formData.attributes = $('#input-attr').val();
+  formData.categories = $('#input-category').val() || [];
+  formData.attributes = $('#input-attr').val() || [];
 
-  $.getJSON('/businesses.json', formData, function(data) {
+  console.log(formData);
 
-    var businesses = {
-      max: 1,
-      data: data
-    };
-
-    map.setView([businesses.data[0].latitude, businesses.data[0].longitude], dataZoom);
-    heatmapLayer.setData(businesses);
-
+  $.getJSON('/businesses.json', formData, function (data) {
+    results = data;
+    plotHeatData();
   });
 
 };
@@ -104,47 +119,40 @@ $(document).ready(function() {
     layers: [baseLayer, heatmapLayer]
   });
 
+  /*
+  map.on('zoomend', function () {
+    if (map.getZoom() > zoomThreshold) {
+      heatmapLayer.setData({'data': []});
+      plotData();
+    } else { 
+      plotHeatData();
+    }   
+  });
+  */
+
   $('#search-btn').click(function() {
     getData(map, heatmapLayer);
   });
 
-
-  
-  
-  $.getJSON("/categories.json", function(data) {
-
-	$.each(data, function(key, value) {   
-    
-    $('#input-category').append($('<option>', {
-    value: value.category_id,
-    text: value.name
-	}));
-	
-	});
-	
-	$('#input-category').multiselect();
-  		
+  $.getJSON('/categories.json', function(data) {
+	  $.each(data, function(key, value) {
+      $('#input-category').append($('<option>', {
+        value: value.category_id,
+        text: value.name
+	    }));
+	  });
+	  $('#input-category').multiselect();
    });
  
-   $.getJSON("/attributes.json", function(data) {
-
-	$.each(data, function(key, value) {   
-    
-    $('#input-attr').append($('<option>', {
-    value: value.attribute_id,
-    text: value.attribute_name
-	}));
-	
-	});
-	
-	$('#input-attr').multiselect();
-  		
-   });
-  
-
-  
-  
-
+  $.getJSON("/attributes.json", function(data) {
+    $.each(data, function(key, value) {   
+      $('#input-attr').append($('<option>', {
+        value: value.attribute_id,
+        text: value.attribute_name
+      }));
+    });
+    $('#input-attr').multiselect();
+  });
 
 });
 
