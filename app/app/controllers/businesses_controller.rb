@@ -8,7 +8,7 @@ class BusinessesController < ApplicationController
     if(params.has_key?(:categories))
     	@businesses = @businesses.joins(:businesscategories).where('businesscategories.category_id' => params[:categories])
     end
-    if(params.has_key?(:atributes))
+    if(params.has_key?(:attributes))
     	@businesses = @businesses.joins(:businessattributes).where('businessattributes.attribute_id' => params[:attributes])
     end
 
