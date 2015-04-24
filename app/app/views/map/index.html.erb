@@ -113,13 +113,12 @@ var getFormData = function () {
 
 var getData = function () {
   var formData = getFormData();
-  console.log(formData);
-
+  //console.log(formData);
   $.getJSON('/businesses.json', formData, function (data) {
     results = data;
     plotHeatData();
+    //map.setView([results[0].latitude, results[0].longitude], dataZoom);
   });
-
 };
 
 var initMap = function () {
@@ -274,12 +273,14 @@ var loadSearch = function () {
   if (! name) return;
   var data = db.load(name);
   setFormData(data);
+  getData();
 };
 
 var recentSearches = [];
 
 var searchRecent = function (n) {
   setFormData(recentSearches[n].data);
+  getData();
 };
 
 var updateHistory = function () {
@@ -298,7 +299,6 @@ $(document).ready(function() {
 
   initMap();
   populateFilters();
-
 
   $('#search-btn').click(function() {
     updateHistory();
