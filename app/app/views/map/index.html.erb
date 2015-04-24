@@ -77,10 +77,11 @@
 var results = [];
 var map = {};
 var heatmapLayer = {};
-var markerLayer = {};
+//var markerLayer = {};
 var dataZoom = 11;
 var zoomThreshold = 13;
 
+/*
 var plotData = function () {
   var arr = [];
   $.each(results, function (index, business) {
@@ -93,13 +94,13 @@ var plotData = function () {
   });
   markerLayer = L.layerGroup(arr);
 };
+*/
 
 var plotHeatData = function () {
   var businesses = {
     max: 1,
     data: results
   };
-
   heatmapLayer.setData(businesses);
 };
 
@@ -111,13 +112,13 @@ var getFormData = function () {
   return formData;
 };
 
-var getData = function () {
+var getBusinessData = function () {
   var formData = getFormData();
   //console.log(formData);
   $.getJSON('/businesses.json', formData, function (data) {
     results = data;
+    map.setView([results[0].latitude, results[0].longitude], dataZoom);
     plotHeatData();
-    //map.setView([results[0].latitude, results[0].longitude], dataZoom);
   });
 };
 
@@ -136,9 +137,9 @@ var initMap = function () {
     "scaleRadius": true,
     "blur": 0.9,
     "useLocalExtrema": false,
-    latField: 'latitude',
-    lngField: 'longitude',
-    valueField: 'rating'
+    "latField": 'latitude',
+    "lngField": 'longitude',
+    "valueField": 'rating'
   };
 
   heatmapLayer = new HeatmapOverlay(cfg);
@@ -149,11 +150,12 @@ var initMap = function () {
     layers: [baseLayer, heatmapLayer]
   });
 
+/*
   map.on('zoomend', function () {
     if (map.getZoom() > zoomThreshold) {
       if (map.hasLayer(heatmapLayer)) map.removeLayer(heatmapLayer);
       if (! map.hasLayer(markerLayer)) {
-        plotData();
+        //plotData();
         map.addLayer(markerLayer);
       }
     } else {
@@ -164,6 +166,7 @@ var initMap = function () {
       }
     }   
   });
+*/
 
 };
 
@@ -273,14 +276,14 @@ var loadSearch = function () {
   if (! name) return;
   var data = db.load(name);
   setFormData(data);
-  getData();
+  getBusinessData();
 };
 
 var recentSearches = [];
 
 var searchRecent = function (n) {
   setFormData(recentSearches[n].data);
-  getData();
+  getBusinessData();
 };
 
 var updateHistory = function () {
@@ -292,6 +295,12 @@ var updateHistory = function () {
   }
 };
 
+
+
+/** INIT **/
+
+
+
 $(document).ready(function() {
 
   db.init();
@@ -302,8 +311,7 @@ $(document).ready(function() {
 
   $('#search-btn').click(function() {
     updateHistory();
-    getData();
-    map.setView([results[0].latitude, results[0].longitude], dataZoom);
+    getBusinessData();
   });
 
 });
