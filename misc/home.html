@@ -56,19 +56,19 @@
 
   <p><a onclick="useCurrentLocation()"><i class="fa fa-map-marker"></i> Current Location</a></p>
 
-  <p><a onclick="toggleSave()"><i class="fa fa-save"></i> Save Search</a></p>
+  <p><a onclick="toggleHidden('save')"><i class="fa fa-save"></i> Save Search</a></p>
 
   <div id="save-well" class="well well-small hidden">
     <label>What would you like to name your search?</label>
-    <input id="input-save" type="text"></input>
+    <input id="input-save" type="text" placeholder="Untitled"></input>
     <div class="text-center">
       <button id="save-btn" class="btn text-center" onclick="saveSearch()">Save</button>
     </div>
   </div>
 
-  <p><a onclick="toggleUpload()"><i class="fa fa-upload"></i> Load Search</a></p>
+  <p><a onclick="toggleHidden('upload')"><i class="fa fa-upload"></i> Load Search</a></p>
 
-  <div id="upload-well" class="well well-small">
+  <div id="upload-well" class="well well-small hidden">
     <label>Which search would you like to load?</label>
     <select id="input-upload"></select>
     <div class="text-center">
@@ -76,33 +76,70 @@
     </div>
   </div>
 
+  <p><a onclick="toggleHidden('history')"><i class="fa fa-history"></i> Recent Searches</a></p>
+  <div id="history-well" class="well well-small hidden"></div>
 
 </div>
 
 <script>
 
-var toggleSave = function () {
-  $('#save-well').toggleClass('hidden');
-};
-
-var toggleUpload = function () {
-  $('#upload-well').toggleClass('hidden');
+var toggleHidden = function (str) {
+  $('#' + str + '-well').toggleClass('hidden');
 };
 
 var loadAllSearches = function () {
   var keys = db.load('keys');
-  $('#input-upload').clear();
-  for (var i = 0; i < keys.size; i++) {
-    $('#input-upload').innerHTML += '<option>' + keys[i] + '</option>';
+  $('#input-upload').empty();
+  $.each(keys, function (key, value) {   
+    $('#input-upload').append($('<option>', {'value': value}).text(value)); 
+  });
+};
+
+var getFormData = function () {
+  var formData = {};
+  formData.city = $('#input-city').val();
+  //formData.categories = $('#input-category').val() || [];
+  //formData.attributes = $('#input-attr').val() || [];
+  return formData;
+};
+
+var setFormData = function (data) {
+  $('#input-city').val(data.city);
+};
+
+var saveSearch = function () {
+  var name = $('#input-save').val() || 'Untitled';
+  db.save(name, getFormData());
+  loadAllSearches();
+};
+
+var loadSearch = function () {
+  var name = $('#input-upload').val();
+  if (! name) return;
+  var data = db.load(name);
+  setFormData(data);
+};
+
+var recentSearches = [];
+
+var searchRecent = function (n) {
+  setFormData(recentSearches[n].data);
+};
+
+var updateHistory = function () {
+  recentSearches.unshift({'timestamp': new Date().toLocaleString(), 'data': getFormData()});
+  $('#history-well').empty();
+  for (var i = 0; i < 10; i++) {
+    if (! recentSearches[i]) return;
+    $('#history-well').append('<p><a onclick="searchRecent(' + i + ')">' + recentSearches[i].timestamp + '</a></p>');
   }
 };
 
 $('#search-btn').click(function() {
-  var formData = {};
-  formData.city = $('#input-city').val();
-  console.log(formData);
+  updateHistory();
 });
 
+db.init();
 loadAllSearches();
 
 </script>

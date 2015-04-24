@@ -5,15 +5,22 @@ db.load = function (key) {
 };
 
 db.init = function () {
-  var keys = [] || db.load('keys');
+  var keys = db.load('keys') || [];
   localStorage.setItem('keys', JSON.stringify(keys));
 };
 
+
+db.contains = function (key) {
+  return db.load('keys').indexOf(key) !== -1;
+};
+
 db.save = function (key, value) {
-  if (key === 'keys') return;
+  if (key === 'keys' || key === 'history') return;
   var keys = db.load('keys');
-  keys.push(key);
-  localStorage.setItem('keys', JSON.stringify(keys));
+  if (! db.contains(key)) {
+    keys.push(key);
+    localStorage.setItem('keys', JSON.stringify(keys));
+  }
   localStorage.setItem(key, JSON.stringify(value));
 };
 
@@ -22,14 +29,6 @@ db.remove = function (key) {
   keys.splice(keys.indexOf(key), 1);
   localStorage.setItem('keys', JSON.stringify(keys));
   localStorage.removeItem(key);
-};
-
-db.contains = function (key) {
-  var keys = db.load('keys');
-  for (var i = 0; i < keys.length; i++) {
-    if (keys[i] === key) return true;
-  }
-  return false;
 };
 
 db.clear = function () {
