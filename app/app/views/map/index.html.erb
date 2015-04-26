@@ -2,7 +2,8 @@
   #map {width:100%; height:500px; margin-bottom:40px;}
   #left-nav{height:500px; max-height:500px; overflow-y:scroll;}
   select,input{width:90%}
-  .well{width:80%;}
+  #input-rating{width:80%; margin-left:5%;}
+  .well{width:90%;}
   .hidden{display:none;}
 </style>
 
@@ -32,6 +33,26 @@
   <select id="input-attr" multiple="multiple"></select>
 
   <br><br>
+  
+  <label>Review Age</label>
+  <select id="input-review-age">
+    <option value="all">All time</option>
+    <option value="5y">Last 5 years</option>
+    <option value="2y">Last 2 years</option>
+    <option value="1y">Last year</option>
+    <option value="6m">Last 6 months</option>
+  </select>
+
+  <br><br>
+  
+
+  <label for="amount">Rating range: (<span id="range"></span>)</label>
+  
+
+ 
+<div id="input-rating" class="text-center"></div>
+  
+<br><br>
 
   <div class="text-center">
     <button id="search-btn" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
@@ -109,6 +130,9 @@ var getFormData = function () {
   formData.city = $('#input-city').val();
   formData.categories = $('#input-category').val() || [];
   formData.attributes = $('#input-attr').val() || [];
+  formData.reviewage = $('#input-review-age').val();
+  formData.minrating = $( "#input-rating" ).slider( "values", 0 );
+  formData.maxrating = $( "#input-rating" ).slider( "values", 1 );
   return formData;
 };
 
@@ -121,6 +145,24 @@ var getBusinessData = function () {
     plotHeatData();
   });
 };
+
+
+var initSlider = function() {
+    $( "#input-rating" ).slider({
+      range: true,
+      id: "rating-slider",
+      min: 0,
+      step: 0.5,
+      max: 5,
+      values: [ 0, 5 ],
+      slide: function( event, ui ) {
+        $( "#range" ).text( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+      }
+    });
+    
+    $( "#range" ).text( $( "#input-rating" ).slider( "values", 0 ) +
+      " - " + $( "#input-rating" ).slider( "values", 1 ) );
+  };
 
 var initMap = function () {
 
@@ -178,7 +220,7 @@ var populateFilters = function () {
         text: value.name
 	    }));
 	  });
-	  //$('#input-category').multiselect();
+	  
    });
  
   $.getJSON("/zattributes.json", function(data) {
@@ -188,7 +230,7 @@ var populateFilters = function () {
         text: value.attribute_name
       }));
     });
-    //$('#input-attr').multiselect();
+    
   });
 };
 
@@ -308,6 +350,8 @@ $(document).ready(function() {
 
   initMap();
   populateFilters();
+  
+  initSlider();
 
   $('#search-btn').click(function() {
     updateHistory();
