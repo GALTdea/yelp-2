@@ -3,33 +3,23 @@
 <table>
   <tr>
     <th>Business</th>
-    <th>Name</th>
-    <th>Full address</th>
-    <th>City</th>
-    <th>State</th>
-    <th>Latitude</th>
-    <th>Longitude</th>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th>Avg Stars</th>
+    <th>Lat</th>
+    <th>Long</th>
+
   </tr>
 
 <% @businesses.each do |business| %>
   <tr>
     <td><%= business.business_id %></td>
-    <td><%= business.name %></td>
-    <td><%= business.full_address %></td>
-    <td><%= business.city %></td>
-    <td><%= business.state %></td>
+    <td><%= business.avgstars %></td>
     <td><%= business.latitude %></td>
     <td><%= business.longitude %></td>
-    <td><%= link_to 'Show', business %></td>
-    <td><%= link_to 'Edit', edit_business_path(business) %></td>
-    <td><%= link_to 'Destroy', business, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
+
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Business', new_business_path %>

@@ -24,16 +24,16 @@ class BusinessesController < ApplicationController
     @businesses = Business.where(:region => params[:city])
 
     if(params.has_key?(:categories))
-    	@businesses = @businesses.joins(:businesscategories).where('businesscategories.category_id' => params[:categories])
+    	@businesses = @businesses.joins(:businesscategories).where("businesscategories.category_id" => params[:categories])
     end
     if(params.has_key?(:attributes))
     	@businesses = @businesses.joins(:businessattributes).where('businessattributes.attribute_id' => params[:attributes])
     end
 
-    @businesses = @businesses.joins(:reviews).merge(
-    Review.select("ORACLEMASTER.REVIEWS.business_id, avg(ORACLEMASTER.REVIEWS.stars) as avgstars")
-    .where(:review_date => timeRange))
-    .group("ORACLEMASTER.REVIEWS.business_id")
+    @businesses = @businesses.select("ORACLEMASTER.BUSINESSES.business_id, avg(ORACLEMASTER.REVIEWS.stars) as rating, ORACLEMASTER.BUSINESSES.latitude, ORACLEMASTER.BUSINESSES.longitude")
+    .joins(:reviews).merge(
+    Review.where(:review_date => timeRange))
+    .group("ORACLEMASTER.BUSINESSES.business_id, ORACLEMASTER.BUSINESSES.latitude, ORACLEMASTER.BUSINESSES.longitude")
     .having("avg(ORACLEMASTER.REVIEWS.stars) >=" + params[:minrating] + "and avg(ORACLEMASTER.REVIEWS.stars) <=" + params[:maxrating] )
 
 
