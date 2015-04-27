@@ -104,13 +104,13 @@
 var results = [];
 var map = {};
 var heatmapLayer = {};
-//var markerLayer = {};
+var markerLayer = {};
 var dataZoom = 11;
 var zoomThreshold = 13;
 
-/*
 var plotData = function () {
   var arr = [];
+  console.log(results);
   $.each(results, function (index, business) {
     arr.push(
       L.marker([business.latitude, business.longitude], {icon: new L.Icon.Default})
@@ -121,7 +121,6 @@ var plotData = function () {
   });
   markerLayer = L.layerGroup(arr);
 };
-*/
 
 var plotHeatData = function () {
   var businesses = {
@@ -204,6 +203,7 @@ var initMap = function () {
   };
 
   heatmapLayer = new HeatmapOverlay(cfg);
+  markerLayer = L.layerGroup([]);
 
   map = new L.Map('map', {
     center: new L.LatLng(39.8282, -98.5795),
@@ -211,12 +211,11 @@ var initMap = function () {
     layers: [baseLayer, heatmapLayer]
   });
 
-/*
   map.on('zoomend', function () {
     if (map.getZoom() > zoomThreshold) {
       if (map.hasLayer(heatmapLayer)) map.removeLayer(heatmapLayer);
       if (! map.hasLayer(markerLayer)) {
-        //plotData();
+        plotData();
         map.addLayer(markerLayer);
       }
     } else {
@@ -227,7 +226,6 @@ var initMap = function () {
       }
     }   
   });
-*/
 
 };
 
@@ -239,43 +237,25 @@ var populateFilters = function () {
         text: value.name
 	    }));
 	  });
-	  
-   });
+  });
  
-
   $.getJSON("/zattributes.json", function(data) {
-    
-    
     $.each(data, function(key, value) {   
-    
     	var newVal = (value.attribute_name).replace(/^price: /gi, "");
-    
-
     	if (newVal != value.attribute_name) {
         $('#input-price').append($('<option>', {
         	value: value.attribute_id,
         	text: value.attribute_name
       	}));
-    	}
-    
-   		else {
+    	} else {
       	$('#input-attr').append($('<option>', {
         	value: value.attribute_id,
         	text: value.attribute_name
       	}));
     	}
-    
-    });
-    
-    
+    });    
   });
-  
-  
-  
-  
 };
-
-
 
 var useCurrentLocation = function () {
   navigator.geolocation.getCurrentPosition(function (data) {
