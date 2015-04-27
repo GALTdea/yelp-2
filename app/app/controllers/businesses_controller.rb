@@ -2,6 +2,24 @@ class BusinessesController < ApplicationController
 
   def index
   #  @cat = Businesscategory.where(:category_id => params[:categories])
+#  formData.city = $('#input-city').val();
+#  formData.categories = $('#input-category').val() || [];
+#  formData.attributes = $('#input-attr').val() || [];
+#  formData.reviewage = $('#input-review-age').val();
+#  formData.minrating = $( "#input-rating" ).slider( "values", 0 );
+#  formData.maxrating = $( "#input-rating" ).slider( "values", 1 );
+    
+    timeRange = (DateTime.now - 10.year)..(DateTime.now); 
+    if(params[:reviewage] == "5y")
+      timeRange = (DateTime.now - 5.year)..(DateTime.now); 
+    elsif(params[:reviewage] == "2y")
+      timeRange = (DateTime.now - 2.year)..(DateTime.now); 
+    elsif(params[:reviewage] == "1y")
+      timeRange = (DateTime.now - 1.year)..(DateTime.now); 
+    elsif(params[:reviewage] == "6m")
+      timeRange = (DateTime.now - 6.month)..(DateTime.now); 
+    end
+
 
     @businesses = Business.where(:region => params[:city])
 
@@ -12,9 +30,12 @@ class BusinessesController < ApplicationController
     	@businesses = @businesses.joins(:businessattributes).where('businessattributes.attribute_id' => params[:attributes])
     end
 
-   # Business.joins(:categories)
+    @businesses = @businesses.joins(:reviews).merge(
+    Review.select("ORACLEMASTER.REVIEWS.business_id, avg(ORACLEMASTER.REVIEWS.stars) as avgstars")
+    .where(:review_date => timeRange))
+    .group("ORACLEMASTER.REVIEWS.business_id")
+    .having("avg(ORACLEMASTER.REVIEWS.stars) >=" + params[:minrating] + "and avg(ORACLEMASTER.REVIEWS.stars) <=" + params[:maxrating] )
 
-  # @businesses = @b.each {|x| x[:rating] = 1}
 
     respond_to do |format|
       format.html # index.html.erb
