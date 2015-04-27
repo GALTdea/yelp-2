@@ -31,7 +31,7 @@
   
   <label>Attribute</label>
   <select id="input-attr" multiple="multiple"></select>
-
+  
   <br><br>
   
   <label>Review Age</label>
@@ -45,6 +45,12 @@
 
   <br><br>
   
+  <label>Price Rating</label>
+  <select id="input-price">
+    <option value="">All Prices</option>
+  </select>
+
+  <br><br>
 
   <label for="amount">Rating range: (<span id="range"></span>)</label>
   
@@ -127,14 +133,27 @@ var plotHeatData = function () {
 
 var getFormData = function () {
   var formData = {};
+  
+  if ($('#input-price').val() == "") {
+  formData.attributes = $('#input-attr').val() || [];
+  }
+  
+  else {
+  formData.attributes = ($('#input-attr').val() || []).concat($('#input-price').val()) || [];
+  }
+  
   formData.city = $('#input-city').val();
   formData.categories = $('#input-category').val() || [];
-  formData.attributes = $('#input-attr').val() || [];
   formData.reviewage = $('#input-review-age').val();
   formData.minrating = $( "#input-rating" ).slider( "values", 0 );
   formData.maxrating = $( "#input-rating" ).slider( "values", 1 );
   return formData;
 };
+
+
+
+
+
 
 var getBusinessData = function () {
   var formData = getFormData();
@@ -223,16 +242,40 @@ var populateFilters = function () {
 	  
    });
  
+
   $.getJSON("/zattributes.json", function(data) {
+    
+    
     $.each(data, function(key, value) {   
-      $('#input-attr').append($('<option>', {
-        value: value.attribute_id,
-        text: value.attribute_name
-      }));
+    
+    	var newVal = (value.attribute_name).replace(/^price: /gi, "");
+    
+
+    	if (newVal != value.attribute_name) {
+        $('#input-price').append($('<option>', {
+        	value: value.attribute_id,
+        	text: value.attribute_name
+      	}));
+    	}
+    
+   		else {
+      	$('#input-attr').append($('<option>', {
+        	value: value.attribute_id,
+        	text: value.attribute_name
+      	}));
+    	}
+    
     });
     
+    
   });
+  
+  
+  
+  
 };
+
+
 
 var useCurrentLocation = function () {
   navigator.geolocation.getCurrentPosition(function (data) {
@@ -352,6 +395,7 @@ $(document).ready(function() {
   populateFilters();
   
   initSlider();
+
 
   $('#search-btn').click(function() {
     updateHistory();
