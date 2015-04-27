@@ -30,10 +30,11 @@ class BusinessesController < ApplicationController
     	@businesses = @businesses.joins(:businessattributes).where('businessattributes.attribute_id' => params[:attributes])
     end
 
-    @businesses = @businesses.select("ORACLEMASTER.BUSINESSES.business_id, avg(ORACLEMASTER.REVIEWS.stars) as rating, ORACLEMASTER.BUSINESSES.latitude, ORACLEMASTER.BUSINESSES.longitude")
+    @businesses = @businesses.select("ORACLEMASTER.BUSINESSES.business_id, avg(ORACLEMASTER.REVIEWS.stars) as rating, ORACLEMASTER.BUSINESSES.latitude, 
+      ORACLEMASTER.BUSINESSES.longitude, ORACLEMASTER.BUSINESSES.name, ORACLEMASTER.BUSINESSES.full_address")
     .joins(:reviews).merge(
     Review.where(:review_date => timeRange))
-    .group("ORACLEMASTER.BUSINESSES.business_id, ORACLEMASTER.BUSINESSES.latitude, ORACLEMASTER.BUSINESSES.longitude")
+    .group("ORACLEMASTER.BUSINESSES.business_id, ORACLEMASTER.BUSINESSES.latitude, ORACLEMASTER.BUSINESSES.longitude, ORACLEMASTER.BUSINESSES.name, ORACLEMASTER.BUSINESSES.full_address")
     .having("avg(ORACLEMASTER.REVIEWS.stars) >=" + params[:minrating] + "and avg(ORACLEMASTER.REVIEWS.stars) <=" + params[:maxrating] )
 
 
