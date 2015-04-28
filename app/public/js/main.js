@@ -136,6 +136,16 @@ var initMap = function () {
 };
 
 var populateFilters = function () {
+
+  $.getJSON('/regions.json', function(data) {
+	  $.each(data, function(key, value) {
+      $('#input-city').append($('<option>', {
+        value: value.name,
+        text: value.name
+	    }));
+	  });
+  });
+
   $.getJSON('/categories.json', function(data) {
 	  $.each(data, function(key, value) {
       $('#input-category').append($('<option>', {
@@ -161,6 +171,7 @@ var populateFilters = function () {
     	}
     });    
   });
+
 };
 
 var useCurrentLocation = function () {
