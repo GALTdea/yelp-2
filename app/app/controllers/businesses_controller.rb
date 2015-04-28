@@ -20,31 +20,24 @@ class BusinessesController < ApplicationController
       timeRange = (DateTime.now - 6.month)..(DateTime.now); 
     end
 
-
     @businesses = Business.where(:region => params[:city])
 
-    if(params.has_key?(:categories))
-    	@businesses = @businesses.joins(:businesscategories).where("businesscategories.category_id" => params[:categories])
-    end
-    if(params.has_key?(:attributes))
-    	@businesses = @businesses.joins(:businessattributes).where('businessattributes.attribute_id' => params[:attributes])
-      '''
-      @businesses = Business.find_by_sql(
-                      ["with tempcount as (
-                        Select ORACLEMASTER.BUSINESSES.business_id
-                      from ORACLEMASTER.BUSINESSES
-                      inner join ORACLEMASTER.BUSINESSATTRIBUTES 
-                      on ORACLEMASTER.BUSINESSES.business_id = ORACLEMASTER.BUSINESSATTRIBUTES.business_id
-                      where ORACLEMASTER.BUSINESSATTRIBUTES.attribute_id in (?)
-                      group by ORACLEMASTER.BUSINESSES.business_id
-                      having count(*) >= ? )
-                      select *
-                      from ORACLEMASTER.BUSINESSES
-                      where ORACLEMASTER.BUSINESSES.business_id in tempcount
-                      ", params[:attributes], params[:attributes].size])
-     # @businesses = @businesses.where(:business_id => @validBiz[:business_id])
 
-      '''
+    if(params.has_key?(:attributes))
+    #	@businesses = @businesses.joins(:businessattributes).where('businessattributes.attribute_id' => params[:attributes])
+      
+      @valid = Businessattribute.select(:business_id).where(:attribute_id => params[:attributes]).group(:business_id)
+      .having("count(?)>=?", :business_id, params[:attributes].size)
+
+      #@businesses = Business.where("ORACLEMASTER.BUSINESSES.business_id in ?", @valid)
+      @businesses = @businesses.where(:business_id => @valid)
+      
+    end
+
+   
+
+    if(params.has_key?(:categories))
+      @businesses = @businesses.joins(:businesscategories).where("businesscategories.category_id" => params[:categories])
     end
 
     @businesses = @businesses.select("ORACLEMASTER.BUSINESSES.business_id, avg(ORACLEMASTER.REVIEWS.stars) as rating, ORACLEMASTER.BUSINESSES.latitude, 
