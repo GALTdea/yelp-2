@@ -1,8 +1,9 @@
 class BusinesscategoriesController < ApplicationController
+
   # GET /businesscategories
   # GET /businesscategories.json
   def index
-    @businesscategories = Businesscategory.limit(50)
+    @businesscategories = Businesscategory.all
 
     respond_to do |format|
       format.html # index.html.erb

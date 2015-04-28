@@ -1,4 +1,5 @@
 class ZattributesController < ApplicationController
+
   # GET /attributes
   # GET /attributes.json
   def index
@@ -9,4 +10,5 @@ class ZattributesController < ApplicationController
       format.json { render json: @zattributes }
     end
   end
+
 end
