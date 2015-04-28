@@ -53,8 +53,12 @@ var getBusinessData = function () {
   //console.log(formData);
   $.getJSON('/businesses.json', formData, function (data) {
     results = data;
-    map.setView([results[0].latitude, results[0].longitude], dataZoom);
-    plotHeatData();
+    if (results.length < 1) {
+      alert('No businesses match those filters.');
+    } else {
+      map.setView([results[0].latitude, results[0].longitude], dataZoom);
+      plotHeatData();
+    }
   });
 };
 
@@ -86,9 +90,9 @@ var initMap = function () {
 
   var cfg = {
     "radius": 0.01,
-    "maxOpacity": .8, 
+    "maxOpacity": 0.7, 
     "scaleRadius": true,
-    "blur": 0.9,
+    "blur": 0.99,
     "useLocalExtrema": false,
     "latField": 'latitude',
     "lngField": 'longitude',
