@@ -1,5 +1,0 @@
-# RAILS SCHEMA
-
-# Businesses
-rails generate scaffold Businesses business_id:integer name:string
-
