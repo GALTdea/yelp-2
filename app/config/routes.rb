@@ -7,5 +7,6 @@ App::Application.routes.draw do
   resources :businessattributes, only: [:index]
   resources :zattributes, only: [:index]
   resources :businesscategories, only: [:index]
+  resources :regions, only: [:index]
 
 end
