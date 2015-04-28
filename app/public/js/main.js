@@ -7,6 +7,14 @@ var markerLayer = {};
 var dataZoom = 11;
 var zoomThreshold = 13;
 
+var hideLoader = function () {
+  $('#loader-area').addClass('hidden');
+};
+
+var showLoader = function () {
+  $('#loader-area').removeClass('hidden');
+};
+
 var plotData = function () {
   var arr = [];
   //console.log(results);
@@ -27,6 +35,7 @@ var plotHeatData = function () {
     data: results
   };
   heatmapLayer.setData(businesses);
+  hideLoader();
 };
 
 var getFormData = function () {
@@ -286,6 +295,7 @@ $(document).ready(function() {
 
 
   $('#search-btn').click(function() {
+    showLoader();
     updateHistory();
     getBusinessData();
   });
