@@ -31,17 +31,17 @@ var plotHeatData = function () {
 
 var getFormData = function () {
   var formData = {};
-  
-  if ($('#input-price').val() == "") {
-  formData.attributes = $('#input-attr').val() || [];
-  }
-  
-  else {
-  formData.attributes = ($('#input-attr').val() || []).concat($('#input-price').val()) || [];
-  }
-  
+    
   formData.city = $('#input-city').val();
   formData.categories = $('#input-category').val() || [];
+
+  if ($('#input-price').val() == "") {
+    formData.attributes = $('#input-attr').val() || [];
+  } else {
+    formData.attributes = ($('#input-attr').val() || []).concat($('#input-price').val()) || [];
+  }
+
+  formData.price = $('#input-price').val();
   formData.reviewage = $('#input-review-age').val();
   formData.minrating = $( "#input-rating" ).slider( "values", 0 );
   formData.maxrating = $( "#input-rating" ).slider( "values", 1 );
@@ -224,7 +224,18 @@ var loadAllSearches = function () {
 var setFormData = function (data) {
   $('#input-city').val(data.city);
   $('#input-category').val(data.categories);
-  $('#input-attr').val(data.attributes);
+
+  var arr = [];
+  for (var i = 0; i < data.attributes.length; i++) {
+    if (data.attributes[i] !== data.price)
+      arr.push(data.attributes[i]);
+  }
+  $('#input-attr').val(arr);
+
+  $('#input-price').val(data.price);
+  $('#input-review-age').val(data.reviewage);
+  $('#input-rating').slider('values', 0, data.minrating);
+  $('#input-rating').slider('values', 1, data.maxrating);
 };
 
 var saveSearch = function () {
