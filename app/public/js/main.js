@@ -17,13 +17,12 @@ var showLoader = function () {
 
 var plotData = function () {
   var arr = [];
-  //console.log(results);
   $.each(results, function (index, business) {
     arr.push(
       L.marker([business.latitude, business.longitude], {icon: new L.Icon.Default})
-      .bindPopup('<p class="lead">' + business.name + '</p>' +
-        '<p>' + business.full_address + '</p>'
-      )
+      .bindPopup('<p class="lead">' + business.name + '<br><small>Rating: ' +
+        business.rating.toFixed(2) + ' / 5.00' + '</small></p><p>' + 
+        business.full_address + '</p>')
     );
   });
   markerLayer = L.layerGroup(arr);
@@ -59,7 +58,6 @@ var getFormData = function () {
 
 var getBusinessData = function () {
   var formData = getFormData();
-  //console.log(formData);
   $.getJSON('/businesses.json', formData, function (data) {
     results = data;
     if (results.length < 1) {
