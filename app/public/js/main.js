@@ -137,15 +137,17 @@ var initMap = function () {
 
 var populateFilters = function () {
 
+  // City select
   $.getJSON('/regions.json', function(data) {
 	  $.each(data, function(key, value) {
       $('#input-city').append($('<option>', {
-        value: value.name,
-        text: value.name
+        value: value.region,
+        text: value.region
 	    }));
 	  });
   });
 
+  // Category select
   $.getJSON('/categories.json', function(data) {
 	  $.each(data, function(key, value) {
       $('#input-category').append($('<option>', {
@@ -155,6 +157,7 @@ var populateFilters = function () {
 	  });
   });
  
+  // Attribute select
   $.getJSON("/zattributes.json", function(data) {
     $.each(data, function(key, value) {   
     	var newVal = (value.attribute_name).replace(/^price: /gi, "");
