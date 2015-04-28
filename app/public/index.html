@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Yelp HeatMap</title>
+  <link rel="stylesheet" href="/css/bootstrap.css">
+  <link rel="stylesheet" href="/css/font-awesome.css">
+  <link rel="stylesheet" href="/css/leaflet.css">
+  <link rel="stylesheet" href="/css/jquery-ui.css">
+  <link rel="stylesheet" href="/css/main.css">
+  
+  <script src="/js/jquery.js"></script>
+</head>
+<body>
+
+<div class="container">
+
+<div class="navbar">
+  <div class="navbar-inner">
+    <a class="brand"><i class="fa fa-globe"></i> Yelp HeatMap</a>
+  </div>
+</div>
+
+<div class="row">
+
+<div id="left-nav" class="span3">
+  <h2>Filters</h2>
+
+  <label>City</label>
+  <select id="input-city">
+    <option value="Charlotte">Charlotte</option>
+    <option value="Las Vegas">Las Vegas</option>
+    <option value="Madison">Madison</option>
+    <option value="Montreal">Montreal</option>
+    <option value="Phoenix">Phoenix</option>
+    <option value="Pittsburgh">Pittsburgh</option>
+  </select>
+
+  <br><br>
+
+  <label>Category</label>
+  <select id="input-category" multiple="multiple"></select>
+
+  <br><br>
+  
+  <label>Attribute</label>
+  <select id="input-attr" multiple="multiple"></select>
+  
+  <br><br>
+  
+  <label>Review Age</label>
+  <select id="input-review-age">
+    <option value="all">All time</option>
+    <option value="5y">Last 5 years</option>
+    <option value="2y">Last 2 years</option>
+    <option value="1y">Last year</option>
+    <option value="6m">Last 6 months</option>
+  </select>
+
+  <br><br>
+  
+  <label>Price Rating</label>
+  <select id="input-price">
+    <option value="">All Prices</option>
+  </select>
+
+  <br><br>
+
+  <label for="amount">Rating range: (<span id="range"></span>)</label>
+  <div id="input-rating" class="text-center"></div>
+  
+  <br><br>
+
+  <div class="text-center">
+    <button id="search-btn" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
+  </div>
+
+  <br>
+
+  <p><a onclick="useCurrentLocation()"><i class="fa fa-map-marker"></i> Current Location</a></p>
+
+  <p><a onclick="toggleHidden('save')"><i class="fa fa-save"></i> Save Search</a></p>
+  <div id="save-well" class="well well-small hidden">
+    <label>What would you like to name your search?</label>
+    <input id="input-save" type="text" placeholder="Untitled"></input>
+    <div class="text-center">
+      <button id="save-btn" class="btn text-center" onclick="saveSearch()">Save</button>
+    </div>
+  </div>
+
+  <p><a onclick="toggleHidden('upload')"><i class="fa fa-upload"></i> Load Search</a></p>
+  <div id="upload-well" class="well well-small hidden">
+    <label>Which search would you like to load?</label>
+    <select id="input-upload"></select>
+    <div class="text-center">
+      <button id="load-btn" class="btn text-center" onclick="loadSearch()">Load</button>
+    </div>
+  </div>
+
+  <p><a onclick="toggleHidden('history')"><i class="fa fa-history"></i> Recent Searches</a></p>
+  <div id="history-well" class="well well-small hidden"></div>
+
+</div>
+
+<div class="span9">
+  <div id="map"></div>
+</div>
+
+</div> <!-- /.row -->
+
+<script src="/js/jquery-ui.js"></script>
+<script src="/js/leaflet.js"></script>
+<script src="/js/heatmap.js"></script>
+<script src="/js/leaflet-heatmap.js"></script>
+<script src="/js/main.js"></script>
+
+</div> <!-- /.container -->
+
+</body>
+</html>
+
