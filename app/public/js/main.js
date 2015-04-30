@@ -30,7 +30,8 @@ var plotData = function () {
 
 var plotHeatData = function () {
   var businesses = {
-    max: 1,
+    min: 0,
+    max: 5,
     data: results
   };
   heatmapLayer.setData(businesses);
@@ -97,7 +98,7 @@ var initMap = function () {
 
   var cfg = {
     "radius": 0.01,
-    "maxOpacity": 0.7, 
+    "maxOpacity": 0.75, 
     "scaleRadius": true,
     "blur": 0.99,
     "useLocalExtrema": false,
