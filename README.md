@@ -12,3 +12,13 @@ To give users a visual way to consume the Yelp data. Sometimes a shopper or dine
 ## Features
 This application will be composed primarily of a heatmap visualization of the Yelp businesses. This will allow visitors to see which areas of the included cities have the highest concentrations of places to eat and shop. We will also implement basic filtering, so that the user can not only see all businesses, but also filter to just see restaurants, 4 or 5 star businesses, those with recent reviews, or other chosen filters.
 
+## Directory Structure
+/preprocessing
+This folder contains all the Ruby and Python scripts used in preprocessing the data for upload to the Oracle Database.
+
+/app
+This folder is the root directory for the Ruby on Rails application. All of our custom back-end code including models and controllers can be found in /app/app. All of our custom front-end code including views and scripts can be found in /app/public.
+The application can be run locally by navigating to this directory on the command line and issuing the following commands:
+* bundle install
+* rails server
+Then, in a browser navigate to localhost:3000.
