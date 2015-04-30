@@ -30,7 +30,7 @@ var plotData = function () {
 
 var plotHeatData = function () {
   var businesses = {
-    min: 0,
+    min: 1,
     max: 5,
     data: results
   };
