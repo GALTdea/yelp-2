@@ -17,8 +17,4 @@ This application will be composed primarily of a heatmap visualization of the Ye
 
 /app: This folder is the root directory for the Ruby on Rails application. All of our custom back-end code including models and controllers can be found in /app/app. All of our custom front-end code including views and scripts can be found in /app/public.
 
-The application can be run locally by navigating to /app on the command line and issuing the following commands:
-1. bundle install
-2. rails server
-
-Then, in a browser navigate to localhost:3000.
+The application can be run locally by navigating to /app on the command line and issuing the following commands: 1) bundle install, 2) rails server. Then, in a browser navigate to localhost:3000.
